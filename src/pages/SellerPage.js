@@ -1,7 +1,9 @@
 // src/pages/SellerPage.js
-import React from "react";
+import React, { useContext } from "react";
 import SellerDashboard from "../components/SellerDashboard";
 import { products } from "../data/products";
+import { AuthContext } from "../context/AuthContext";
+import { Navigate } from "react-router-dom";
 
 const dummyOrders = [
   { id: 1, product: products[0], status: "Pending" },
@@ -10,6 +12,12 @@ const dummyOrders = [
 ];
 
 const SellerPage = () => {
+  const { user } = useContext(AuthContext);
+
+  if (!user || user.role !== "vendor") {
+    return <Navigate to="/login" />;
+  }
+
   return <SellerDashboard orders={dummyOrders} products={products} />;
 };
 

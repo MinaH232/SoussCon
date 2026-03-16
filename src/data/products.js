@@ -64,7 +64,7 @@ export const products = [
       "حنبل مغربي تقليدي بزخارف يدوية دقيقة. يستخدم كغطاء للأريكة أو معلّق حائط ديكوري. قطعة فنية من تراث الحرف اليدوية المغربية. مقاس 100x150cm.",
     category: "سجاد وزرابي",
     price: 550,
-    image: "/images/moroccan-hanbal.png",
+    image: "/images/dsc01569.png",
   },
 
   // ===== هدايا وتذكارات — Souvenirs & Gifts =====
@@ -75,7 +75,7 @@ export const products = [
       "مجموعة مغناطيسات تذكارية مزخرفة بمعالم أكادير الشهيرة: الكورنيش، القصبة، الشاطئ. هدية مثالية من رحلتك لأكادير. طقم 3 قطع.",
     category: "هدايا وتذكارات",
     price: 45,
-    image: "/images/agadir-magnet.png",
+    image: "/images/imges1.png",
   },
   {
     id: 9,
@@ -84,7 +84,7 @@ export const products = [
       "لوحة فنية صغيرة منحوتة يدوياً على خشب الأركان. تصاميم هندسية أمازيغية تعكس الهوية الثقافية لمنطقة سوس ماسة. مقاس 20x30cm.",
     category: "هدايا وتذكارات",
     price: 95,
-    image: "/images/wood-art.png",
+    image: "/images/images.png",
   },
   {
     id: 10,
@@ -180,7 +180,7 @@ export const products = [
       "أملو تقليدي محضّر من زيت الأركان المحمّص واللوز المطحون والعسل الحر. وصفة سوسية أصيلة غنية بالطاقة والفيتامينات. مثالي للفطور مع الخبز. عبوة 300g.",
     category: "منتجات غذائية محلية",
     price: 95,
-    image: "/images/amlou.png",
+    image: "/images/Amlou.png",
   },
   {
     id: 20,
@@ -189,7 +189,7 @@ export const products = [
       "عسل دغموس نقي من مناحل سوس ماسة. عسل داكن اللون ذو نكهة قوية ومميزة، معروف بفوائده الصحية المتعددة. مثالي للعلاج الطبيعي والاستخدام اليومي. عبوة 500g.",
     category: "منتجات غذائية محلية",
     price: 150,
-    image: "/images/daghmous-honey.png",
+    image: "/images/miel-d-euphorbe-daghmous-500g-rimota.jpg",
   },
   {
     id: 21,
@@ -198,7 +198,7 @@ export const products = [
       "علبة هدايا من التين المجفف الطبيعي واللوز المحمّص من منطقة سوس. منتجات عضوية غنية بالألياف والبروتين. تغليف أنيق يجعلها هدية مثالية. عبوة 400g.",
     category: "منتجات غذائية محلية",
     price: 75,
-    image: "/images/figs-almonds.png",
+    image: "/images/Fresh-Figs-and-Almonds-cD.jpg",
   },
   {
     id: 22,

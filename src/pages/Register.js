@@ -1,0 +1,153 @@
+// src/pages/Register.js
+import React, { useState, useContext, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useLanguage } from "../i18n/LanguageContext";
+import { AuthContext } from "../context/AuthContext";
+
+const Register = () => {
+  const { t } = useLanguage();
+  const { register } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    password: ""
+  });
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Default role is "client" for public registrations
+    const result = register(form.name, form.email, form.password, "client");
+    if (result.success) {
+      navigate("/");
+    } else {
+      alert(result.message);
+    }
+  };
+
+  const handleSocialLogin = (provider) => {
+    localStorage.setItem("oauth_pending_provider", provider);
+
+    const width = 500;
+    const height = 600;
+    const left = window.screen.width / 2 - width / 2;
+    const top = window.screen.height / 2 - height / 2;
+
+    let oauthUrl = "";
+    if (provider === "Google") {
+      oauthUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=demo&redirect_uri=${encodeURIComponent(window.location.origin + "/oauth/callback")}&response_type=code&scope=email profile`;
+    } else if (provider === "Facebook") {
+      oauthUrl = `https://www.facebook.com/v11.0/dialog/oauth?client_id=demo&redirect_uri=${encodeURIComponent(window.location.origin + "/oauth/callback")}&state=demo`;
+    }
+
+    // Open popup
+    window.open(
+      oauthUrl,
+      "OAuth Popup",
+      `width=${width},height=${height},top=${top},left=${left},toolbar=no,menubar=no,scrollbars=yes,resizable=yes`
+    );
+  };
+
+  // Listen for messages from the OAuth popup
+  useEffect(() => {
+    const handleMessage = (event) => {
+      // Validate origin in production! Here we assume same origin because of our mock setup
+      if (event.origin !== window.location.origin) return;
+
+      if (event.data === "oauth-success") {
+        navigate("/");
+      } else if (event.data === "oauth-failure") {
+        alert("Social login failed.");
+      }
+    };
+
+    window.addEventListener("message", handleMessage);
+    return () => window.removeEventListener("message", handleMessage);
+  }, [navigate]);
+
+
+  return (
+    <div className="login-page">
+      <div className="login-card">
+        <div className="login-header">
+          <img src="/images/logo.png" alt="SoussCon" className="login-logo" />
+          <h2>Register</h2>
+          <p>Create a new account</p>
+        </div>
+        <form className="login-form" onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="name">Name</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={form.name}
+              onChange={handleChange}
+              required
+              placeholder="Your full name"
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="email">{t("email")}</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={form.email}
+              onChange={handleChange}
+              required
+              placeholder={t("emailPlaceholder")}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">{t("password")}</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={form.password}
+              onChange={handleChange}
+              required
+              placeholder={t("passwordPlaceholder")}
+            />
+          </div>
+          <button type="submit" className="btn btn-primary btn-lg btn-block" style={{ marginTop: '1rem' }}>
+            {t("signUp")}
+          </button>
+        </form>
+
+        <div className="login-divider">
+          <span>{t("orContinueWith")}</span>
+        </div>
+        <div className="login-social">
+          <button type="button" onClick={() => handleSocialLogin("Google")} className="btn btn-social btn-google">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/>
+              <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+              <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+              <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+            </svg>
+            {t("google")}
+          </button>
+          <button type="button" onClick={() => handleSocialLogin("Facebook")} className="btn btn-social btn-facebook">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="#1877F2">
+              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+            </svg>
+            {t("facebook")}
+          </button>
+        </div>
+
+        <p className="login-footer">
+          Already have an account? <Link to="/login">{t("signIn")}</Link>
+        </p>
+      </div>
+    </div>
+  );
+};
+
+export default Register;

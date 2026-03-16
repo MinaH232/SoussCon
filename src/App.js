@@ -9,6 +9,10 @@ import CartPage from "./pages/CartPage";
 import Checkout from "./pages/Checkout";
 import SellerPage from "./pages/SellerPage";
 import Login from "./pages/Login";
+import Register from "./pages/Register";
+import AdminDashboard from "./pages/AdminDashboard";
+import DeliveryDashboard from "./pages/DeliveryDashboard";
+import OAuthCallback from "./pages/OAuthCallback";
 
 function App() {
   const { dir } = useLanguage();
@@ -68,12 +72,13 @@ function App() {
               />
             }
           />
-          <Route
-            path="/checkout"
-            element={<Checkout cart={cart} clearCart={clearCart} />}
-          />
+          <Route path="/checkout" element={<Checkout cart={cart} clearCart={clearCart} />} />
           <Route path="/seller" element={<SellerPage />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/delivery" element={<DeliveryDashboard />} />
+          <Route path="/oauth/callback" element={<OAuthCallback />} />
         </Routes>
       </main>
     </div>
